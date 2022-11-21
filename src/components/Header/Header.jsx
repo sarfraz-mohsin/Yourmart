@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useRef, useEffect} from 'react'
 
 import { NavLink } from 'react-router-dom';
 import './header.css';
@@ -26,8 +26,28 @@ const nav__links = [
 ]
 
 const Header = () => {
+  
+  const headerRef = useRef(null);
+
+  const stickyHeaderFunc = () => {
+    window.addEventListener('scroll', ()=> {
+      if(document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+        headerRef.current.classList.add('sticky__header')
+      }
+      else{
+        headerRef.current.classList.remove('sticky__header')
+      }
+    })
+  }
+
+  useEffect(() => {
+    stickyHeaderFunc()
+
+    return () => window.removeEventListener('scroll', stickyHeaderFunc)
+  })
+
   return (
-    <header className="header">
+    <header className="header" ref={headerRef}>
       <Container>
         <Row>
           <div className="nav__wrapper">
@@ -53,11 +73,11 @@ const Header = () => {
             <div className="nav__icons">
 
               <span className='fav__icon'>
-                <i class="ri-heart-line"></i>
+                <i className="ri-heart-line"></i>
                 <span className="badge">1</span>
               </span>
               <span className="cart__icon">
-                <i class="ri-shopping-bag-line"></i>
+                <i className="ri-shopping-bag-line"></i>
                 <span className="badge">2</span>
               </span>
 
@@ -65,7 +85,7 @@ const Header = () => {
             </div>
 
             <div className="mobile__menu">
-              <i class="ri-menu-line"></i>
+              <i className="ri-menu-line"></i>
             </div>
 
           </div>
