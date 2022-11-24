@@ -1,31 +1,16 @@
-import React, {useRef, useEffect} from 'react'
 import './Scroller.css'
 
 const Scroller = () => {
-    const scroller = useRef(null)
-
-    const scrollerFunc = () => {
-        window.addEventListener('scroll', () => {
-            if(document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
-                scroller.current.classList.add('scroll-up')
-            }
-            else{
-                scroller.current.classList.remove('scroll-up')
-            }
-        })
-    }
-
-    useEffect(() => {
-        scrollerFunc()
-
-        return () => window.removeEventListener('scroll', scrollerFunc)
+     window.addEventListener('scroll', function() {
+        const scrollUp = document.querySelector('.scrollup')
+        //when the scroll is higher than 560 viewport height, add the show-scroll class to a tag with the scroll-top class
+        if(this.scrollY >=560) scrollUp.classList.add("show-scroll");
+        else scrollUp.classList.remove('show-scroll')
     })
 
   return (
-    <a href='#top'>
-        <div ref={scroller}>
-            <i className="ri-arrow-up-line"></i>
-        </div>
+    <a href='#top' className='scrollup'>
+        <i className="ri-arrow-up-line"></i>
     </a>
   )
 }
